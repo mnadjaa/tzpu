@@ -1,0 +1,32 @@
+[
+  {
+    "BROKER_TYPE": 3,
+    "opcije": "neka_opcija",
+    "READY_COUNT": 10,
+    "MAX_AVAILABLE_RESOURCES": 100,
+    "CRITICAL_UTILISATION_PERCENT": 80,
+    "RESOURCE_ADD_NUMBER": 5,
+    "avg_utilization": 75.5,
+    "avg_wait": 2.3,
+    "USAGE_TIME": "[10, 20, 30]",
+    "SLA1_broke": 0,
+    "SLA2_broke": 0,
+    "SLA3_broke": 0,
+    "SLA4_broke": 0
+  },
+  {
+    "BROKER_TYPE": 3,
+    "opcije": "druga_opcija",
+    "READY_COUNT": 15,
+    "MAX_AVAILABLE_RESOURCES": 150,
+    "CRITICAL_UTILISATION_PERCENT": 85,
+    "RESOURCE_ADD_NUMBER": 10,
+    "avg_utilization": 80.5,
+    "avg_wait": 1.8,
+    "USAGE_TIME": "[15, 25, 35]",
+    "SLA1_broke": 1,
+    "SLA2_broke": 0,
+    "SLA3_broke": 0,
+    "SLA4_broke": 0
+  }
+]
