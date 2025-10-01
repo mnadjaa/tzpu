@@ -15,7 +15,9 @@ class BrokerNoPreparing(BrokerCore):
         BrokerCore.__init__(self, log, resource_provider, user_scheduler, env)
 
     def prepare_new_resources(self, env: RealtimeEnvironment):
-        pass
+        #pass
+        yield env.timeout(0)
 
     def prepare_one_resource(self, env):
-        pass
+        #pass
+        yield env.timeout(0)

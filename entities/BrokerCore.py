@@ -47,10 +47,11 @@ class BrokerCore:
             # self.prepare_new_resources(self.env)
             resource = self.resource_provider.get_resource()
 
-        with resource.simpy_resource.request() as req:
-            yield req
-            queue_end = self.env.now
+        with resource.simpy_resource.request() as req:  #kreira se zahtev za resursom
+            yield req     #proces se pauzira i ceka
+            queue_end = self.env.now   #kad je vreme cekanja zavrseno
 
+#racuna se koliko je cekao i da je resurs zauzet
             self.analytics.register_utilization(self.env.now, self.resource_provider.get_resource_count(),
                                                 self.resource_provider.get_resource_used_count())
             self.analytics.register_user_waiting(queue_begin, queue_end, user)

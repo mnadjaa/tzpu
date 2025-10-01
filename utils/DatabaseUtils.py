@@ -58,7 +58,7 @@ class DatabaseUtils:
             with open(file, "a") as myfile:
                 myfile.write("\n" + str_)
     
-    def log_event(self, event_type, user_id, time, duration):
+    def log_event(self, event_type, user_id, time, duration):#samo debagovanje - ne upisuje u fajl
         print("EVENT")
         print(event_type)
         # self.execute_query(
@@ -85,6 +85,11 @@ class DatabaseUtils:
             #                    (Properties.SIMULATION_UUID, name, value))
             self.WriteProperties(Properties.SIMULATION_UUID, name, value)
 
+
+
+
+#ove metode za bazu se ne koriste:
+    '''
     def get_all_simulation_with_prop(self):
         return []
         return self.execute_simple_select_query("Select * FROM Simulation"
@@ -102,3 +107,4 @@ class DatabaseUtils:
     def get_data_for_simulation(self, simulation_uuid, event_type):
         return []
         return self.execute_select_query("Select * FROM Events where SIMULATION_UUID=%s AND EVENT_TYPE=%s", (simulation_uuid,event_type))
+    '''

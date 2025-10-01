@@ -27,7 +27,7 @@ class UserScheduler:
 
 
     # stari kod, ne koristi se ovaj mod
-    def basic_mod(self):
+    """def basic_mod(self):
         self.INTER_ARRIVAL_TIMES = [random.expovariate(1 / Properties.NEXT_LOGIN_MEAN)
                                     for _ in range(80)]
         self.USERS_NUMBER = [Properties.get_positive_value_gauss(Properties.USERS_PER_LOGIN_MEAN,
@@ -36,11 +36,14 @@ class UserScheduler:
         self.USAGE_TIME = [Properties.get_positive_value_gauss(Properties.USERS_PER_LOGIN_MEAN,
                                                                Properties.USERS_PER_LOGIN_STD)
                            for _ in range(sum(self.USERS_NUMBER))]
+"""
 
+#raspored dolazaka korisnika:
     def real_mod(self):
         # inter arrival times
-        #if Properties.CONSTANT_USER_COUNT_ENABLED:
-        if True:                                                                                           #umesto provere da li promenljive CONSTANT_USER_COUNT_ENABLED uvek se izvrsava ovaj kod tj uvek se koristi const vrednost za br korisnika
+        print("POZVAN real_mod()")
+        if Properties.CONSTANT_USER_COUNT_ENABLED:
+                                                                                                   #umesto provere da li promenljive CONSTANT_USER_COUNT_ENABLED uvek se izvrsava ovaj kod tj uvek se koristi const vrednost za br korisnika
             self.USERS_NUMBER = []
             total_users_count = Properties.USER_COUNT
                                                                                                          ## inicijalni udar
@@ -83,6 +86,8 @@ class UserScheduler:
                                  for _ in range(80)]
         if Properties.ARRIVAL_PATTERN == 3:
             csv_file_path = os.path.join("LOGS", "random_numbers.csv")
+            print(f"Putanja do fajla: {os.path.abspath(csv_file_path)}")  # Dodaj ovo
+            print(f"Trenutni radni direktorijum: {os.getcwd()}")  # I ovo
 
             def option3_generate_numbers():
                 random_numbers = [random.randint(20, 120) for _ in range(sum(self.USERS_NUMBER))]

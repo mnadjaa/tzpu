@@ -6,7 +6,7 @@ from builtins import staticmethod
 class Properties:
     SIMULATION_UUID = 0
     TIME_SPEEDUP = 2000000
-    SIMULATION_DURATION_MINUTES = 300
+    SIMULATION_DURATION_MINUTES = 200
 
     CONSTANT_USER_COUNT_ENABLED = True
     USER_COUNT = 200
@@ -17,12 +17,12 @@ class Properties:
     USERS_PER_LOGIN_MEAN = 20
     USERS_PER_LOGIN_STD = 3
 
-    SET_RASPOREDA = -1 ## dodeli se u user scheduler
+    SET_RASPOREDA = -1
 
     ####### Sledeca 4 mi optimizujemo (menjamo):
     READY_COUNT = 10                                          # koliko resursa spremno na startu
-    MAX_AVAILABLE_RESOURCES = 150                               # koliko max imamo resursa available
-    CRITICAL_UTILISATION_PERCENT = 0.6                                # kada da sprema nove resurse
+    MAX_AVAILABLE_RESOURCES = 10#150                               # koliko max imamo resursa available
+    CRITICAL_UTILISATION_PERCENT =0.6                                # kada da sprema nove resurse
     RESOURCE_ADD_NUMBER = 1                                         # ovoliko resursa se dodaju kad critical util
     #RESOURCE_ADD_RATE = 3   # ovo se ne koristi nigde
 
@@ -31,8 +31,8 @@ class Properties:
     RESOURCE_USAGE_TIME_MEAN = 60
     RESOURCE_USAGE_TIME_STD = 15
 
-    RESOURCE_PREPARE_TIME_MEAN = 5
-    RESOURCE_PREPARE_TIME_STD = 2
+    RESOURCE_PREPARE_TIME_MEAN = 2#5
+    RESOURCE_PREPARE_TIME_STD = 1#2
 
     # GAMMA_25_SHAPE = 0.181
     # GAMMA_25_SCALE = 0.56
@@ -55,9 +55,9 @@ class Properties:
     SLA2 = 0.5
     SLA3 = 1.0
     SLA4 = 1.5
-    ARRIVAL_PATTERN = 1
+    ARRIVAL_PATTERN = 3 #za 3 ne radi lepo
     INITIAL_WAVE_KNOWN = True
-    BROKER_TYPE = 1
+    BROKER_TYPE = 2
 
     IMPORTANT_TXT_SUFFIX = ""
 

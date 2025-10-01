@@ -13,9 +13,10 @@ import sys
 import os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from entities.EventType import EventType
-from utils.DatabaseUtils import DatabaseUtils
+from utils.Analytics import Analytics # DODAJTE OVU LINIJU
 
-database = DatabaseUtils()
+
+database = Analytics()#🐻
 
 def bar_graph():
     labels = ['1', '2', '3', '4', '5']

@@ -12,7 +12,6 @@ from entities.User import User
 from entities.UserScheduler import UserScheduler
 from utils.Analytics import Analytics
 from utils.Graphs import Graphs
-from utils.DatabaseUtils import DatabaseUtils
 from utils.DisplayLog import DisplayLog
 from utils.Proprerties import Properties
 from utils.Options import Options
@@ -30,7 +29,7 @@ from datetime import datetime
 #import threading
 import os
 
-SEED = 42
+#SEED = 42
 ui = True    #ovde dal hoces UI-------promenila sam sa False na True da se prikazuju grafici------------------------------------------------------
 
 _arrival_pattern = None
@@ -42,16 +41,16 @@ _resurs_std = Options.RESOURCE_PREPARE_TIME_STD_OPTS
 _set_raspodela = None
 pocetne_vrednosti = [0, 0, 0, 0, True] #mean, arrival, broker, set, initial
 
-_single_run = False
+_single_run = True
 one_important_txt = False
 
 _i_ = 0
 args = list(map(lambda x: x.lower(), sys.argv[1:]))
 while _i_ < len(args):
-    if(args[_i_]=="seed"):
-        SEED = int(args[_i_+1])
-        _i_+=1
-    elif(args[_i_]=="u" or args[_i_]=="ui"):
+    #if(args[_i_]=="seed"):
+     #   SEED = int(args[_i_+1])
+      #  _i_+=1
+    if(args[_i_]=="u" or args[_i_]=="ui"):    #elif
         ui = ((args[_i_+1])[0]=="t" or (args[_i_+1])[0]=="y" or (args[_i_+1])[0]=="true")
         _i_+=1
     elif(args[_i_]=="i" or args[_i_]=="iw" or args[_i_]=="initial_wave"):
@@ -104,7 +103,7 @@ while _i_ < len(args):
 main = None
 graph = None
 user_scheduler = None
-database = None
+#database = None
 analytics = None
 canvas = None
 log = None
@@ -158,7 +157,7 @@ if ui:
 ##Properties.USERS_PER_LOGIN_MEAN = rnd((20,35))
 
 ## option 2
-Properties.USER_COUNT = 100  # 300
+#Properties.USER_COUNT = 100  # 300
 #### T = 0
 ##Properties.USERS_PER_LOGIN_MEAN = rnd((20,35,100))
 #### T>0
@@ -197,28 +196,28 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
     user_id = 1
     next_person_id = 0
 
-    database.WriteImportant(f"\n{'{'}\n\"id\":\"{Properties.SIMULATION_UUID}\",\"time\":\"{datetime.now()}\",",None)
-    database.WriteImportant(opcije,"opcije")
-    database.WriteImportant(SEED,"SEED")
+    analytics.WriteImportant(f"\n{'{'}\n\"id\":\"{Properties.SIMULATION_UUID}\",\"time\":\"{datetime.now()}\",",None)
+    analytics.WriteImportant(opcije,"opcije")
+    #analytics.WriteImportant(SEED,"SEED")
     #database.WriteImportant(Properties.SLA,"SLA")
-    database.WriteImportant(Properties.ARRIVAL_PATTERN,"ARRIVAL_PATTERN")
-    database.WriteImportant(Properties.INITIAL_WAVE_KNOWN,"INITIAL_WAVE_KNOWN")
-    database.WriteImportant(Properties.BROKER_TYPE,"BROKER_TYPE")
-    database.WriteImportant(Properties.READY_COUNT,"READY_COUNT")
-    database.WriteImportant(Properties.MAX_AVAILABLE_RESOURCES,"MAX_AVAILABLE_RESOURCES")
-    database.WriteImportant(Properties.CRITICAL_UTILISATION_PERCENT,"CRITICAL_UTILISATION_PERCENT")
-    database.WriteImportant(Properties.RESOURCE_ADD_NUMBER,"RESOURCE_ADD_NUMBER")
-    database.WriteImportant(Properties.SET_RASPOREDA,"SET_RASPOREDA")
-    database.WriteImportant(Properties.RESOURCE_PREPARE_TIME_MEAN,"RESOURCE_PREPARE_TIME_MEAN")
-    database.WriteImportant(Properties.RESOURCE_PREPARE_TIME_STD,"RESOURCE_PREPARE_TIME_STD")
-    database.WriteImportant(Properties.USERS_PER_LOGIN_MEAN,"USERS_PER_LOGIN_MEAN")
-    database.WriteImportant(Properties.NEXT_LOGIN_MEAN,"NEXT_LOGIN_MEAN")
-    database.WriteImportant(Properties.NEXT_LOGIN_STD,"NEXT_LOGIN_STD")
-    database.WriteImportant(Properties.USER_COUNT,"USER_COUNT")
-    database.WriteImportant(user_scheduler.INTER_ARRIVAL_TIMES,"INTER_ARRIVAL_TIMES")
-    database.WriteImportant(user_scheduler.USERS_NUMBER,"USERS_NUMBER")
-    database.WriteImportant(user_scheduler.USAGE_TIME,"USAGE_TIME")
-    database.WriteImportant(user_scheduler.TIME_BETWEEN_LOGINS,"TIME_BETWEEN_LOGINS")
+    analytics.WriteImportant(Properties.ARRIVAL_PATTERN,"ARRIVAL_PATTERN")
+    analytics.WriteImportant(Properties.INITIAL_WAVE_KNOWN,"INITIAL_WAVE_KNOWN")
+    analytics.WriteImportant(Properties.BROKER_TYPE,"BROKER_TYPE")
+    analytics.WriteImportant(Properties.READY_COUNT,"READY_COUNT")
+    analytics.WriteImportant(Properties.MAX_AVAILABLE_RESOURCES,"MAX_AVAILABLE_RESOURCES")
+    analytics.WriteImportant(Properties.CRITICAL_UTILISATION_PERCENT,"CRITICAL_UTILISATION_PERCENT")
+    analytics.WriteImportant(Properties.RESOURCE_ADD_NUMBER,"RESOURCE_ADD_NUMBER")
+    analytics.WriteImportant(Properties.SET_RASPOREDA,"SET_RASPOREDA")
+    analytics.WriteImportant(Properties.RESOURCE_PREPARE_TIME_MEAN,"RESOURCE_PREPARE_TIME_MEAN")
+    analytics.WriteImportant(Properties.RESOURCE_PREPARE_TIME_STD,"RESOURCE_PREPARE_TIME_STD")
+    analytics.WriteImportant(Properties.USERS_PER_LOGIN_MEAN,"USERS_PER_LOGIN_MEAN")
+    analytics.WriteImportant(Properties.NEXT_LOGIN_MEAN,"NEXT_LOGIN_MEAN")
+    analytics.WriteImportant(Properties.NEXT_LOGIN_STD,"NEXT_LOGIN_STD")
+    analytics.WriteImportant(Properties.USER_COUNT,"USER_COUNT")
+    analytics.WriteImportant(user_scheduler.INTER_ARRIVAL_TIMES,"INTER_ARRIVAL_TIMES")
+    analytics.WriteImportant(user_scheduler.USERS_NUMBER,"USERS_NUMBER")
+    analytics.WriteImportant(user_scheduler.USAGE_TIME,"USAGE_TIME")
+    analytics.WriteImportant(user_scheduler.TIME_BETWEEN_LOGINS,"TIME_BETWEEN_LOGINS")
 
     ## ako je poznato T = 0 i intenzitet inicijalnog udara
 
@@ -242,7 +241,7 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
             log.arrived(users_number)
 
         # self.analytics.register_user_login() below is for reporting purposes only
-        database.log_event(EventType.USER_LOGIN.value, None, env.now, users_number)
+        analytics.log_event(EventType.USER_LOGIN.value, None, env.now, users_number)
         for user in range(users_number):
             user = User("user", user_id)
             user_id += 1
@@ -251,23 +250,23 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
             yield env.timeout(user_scheduler.TIME_BETWEEN_LOGINS.pop())
 
 
-    database.WriteImportant(graph.avg_wait(graph.utilization),"avg_utilization ")
-    database.WriteImportant(graph.avg_wait(graph.wait_for_resource),"avg_wait ")
-    database.WriteImportant(broker.analytics.SLA1_broke,"SLA1_broke ")
-    database.WriteImportant(broker.analytics.SLA2_broke,"SLA2_broke ")
-    database.WriteImportant(broker.analytics.SLA3_broke,"SLA3_broke ")
-    database.WriteImportant(broker.analytics.SLA4_broke,"SLA4_broke ")
-    database.WriteImportant("},",None)
+    analytics.WriteImportant(graph.avg_wait(graph.utilization),"avg_utilization ")#moze i analytics umesto database
+    analytics.WriteImportant(graph.avg_wait(graph.wait_for_resource),"avg_wait ")
+    analytics.WriteImportant(broker.analytics.SLA1_broke,"SLA1_broke ")
+    analytics.WriteImportant(broker.analytics.SLA2_broke,"SLA2_broke ")
+    analytics.WriteImportant(broker.analytics.SLA3_broke,"SLA3_broke ")
+    analytics.WriteImportant(broker.analytics.SLA4_broke,"SLA4_broke ")
+    analytics.WriteImportant("},",None)
 
     env.process(broker.end_process())
-    database.writeAll()
-    database.clear()
+    analytics.writeAll()
+    analytics.clear_logs()
     print("DONE !!!!!!!!!!!!!!!!!")
     DONE = True
     if ui:
-        create_window(broker)#🦋 dodala sam broker parametar
+        create_window(broker)#dodala sam broker parametar
         #input()
-        main.destroy()
+        #main.destroy()
     #else:
     if _single_run: sys.exit()
 
@@ -290,10 +289,10 @@ def close():
 
 
 def test_option(opcije):
-    global DONE, database, analytics, user_scheduler, graph, main, canvas, log
+    global DONE, analytics, user_scheduler, graph, main, canvas, log #,database
     DONE = False
-    random.seed(SEED)
-    np.random.seed(seed=SEED)
+    #random.seed(SEED)
+    #np.random.seed(seed=SEED)
     if not one_important_txt:
         Properties.IMPORTANT_TXT_SUFFIX = json.dumps(opcije)
 
@@ -302,22 +301,24 @@ def test_option(opcije):
     print(f" RESOURCE_PREPARE_TIME_STD: {Properties.RESOURCE_PREPARE_TIME_STD}")
     #print(f" SLA: {Properties.SLA}")
     print(f" ARRIVAL_PATTERN: {Properties.ARRIVAL_PATTERN}")
-    print(f" ARRIVAL_PATTERN: {Properties.ARRIVAL_PATTERN}")
     print(f"BROKER_TYPE: {Properties.BROKER_TYPE}")
     print(f"SET_RASPOREDA: {Properties.SET_RASPOREDA}")
     print(f"INITIAL_WAVE_KNOWN: {Properties.INITIAL_WAVE_KNOWN}")
 
-    database = DatabaseUtils()
-    database.clear()
+    #database = DatabaseUtils()
+    #database.clear()
+    analytics = Analytics()
+    analytics.clear_logs()  # Poziv nove metode za čišćenje keša
 
-    env = simpy.rt.RealtimeEnvironment(factor=(1.0 / Properties.TIME_SPEEDUP), strict=False)
+    env = simpy.rt.RealtimeEnvironment(factor=(5.0 / Properties.TIME_SPEEDUP), strict=False)   #🦋 1.0 faktor moze da se menja da sim napreduje brze/sporije
 
     analytics = Analytics()
 
     user_scheduler = UserScheduler()
 
     user_scheduler.real_mod()
-    database.log_simulation_start()
+    #database.log_simulation_start()
+    analytics.log_simulation_start()
 
     log = None
     if ui:
@@ -384,16 +385,36 @@ if _single_run == False:
                 pocetne_vrednosti[3] = 0
             pocetne_vrednosti[2] = 0
         pocetne_vrednosti[1] = 0
+
 else:
-    opcije = [_resurs_mean,_arrival_pattern,_broker_choice,_set_raspodela,_initial_wave]
+    if _resurs_mean is None:
+        _resurs_mean = Options.RESOURCE_PREPARE_TIME_MEAN_OPTS[0]
+    if _resurs_std is None:
+        _resurs_std = Options.RESOURCE_PREPARE_TIME_STD_OPTS
+    if _arrival_pattern is None:
+        _arrival_pattern = Properties.ARRIVAL_PATTERN
+    if _broker_choice is None:
+        _broker_choice = Properties.BROKER_TYPE
+    if _set_raspodela is None:
+        _set_raspodela = Properties.SET_RASPOREDA
+        if _set_raspodela == -1:
+            _set_raspodela = 0
+
+    if _initial_wave is None:
+        _initial_wave = Properties.INITIAL_WAVE_KNOWN
+
+    opcije = [_resurs_mean, _arrival_pattern, _broker_choice, _set_raspodela, _initial_wave]
     Properties.RESOURCE_PREPARE_TIME_MEAN = _resurs_mean
     Properties.RESOURCE_PREPARE_TIME_STD = _resurs_std
-    #Properties.SLA = _sla
+    # Properties.SLA = _sla
     Properties.ARRIVAL_PATTERN = _arrival_pattern
     Properties.BROKER_TYPE = _broker_choice
     Properties.SET_RASPOREDA = _set_raspodela
     Properties.INITIAL_WAVE_KNOWN = _initial_wave
+
     test_option(opcije)
+
+
 
 
 
