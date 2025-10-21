@@ -52,8 +52,8 @@ class Graphs:
         return self.canvas.create_text(self.x1 + offset_x, self.y1 + offset_y, text=text, anchor=tk.NW)
 
     def tick(self, time):
-        if not self.canvas.winfo_exists():#🦋 ovU sam LINIJU dodala
-            return  # Exit if canvas no longer exists#🦋ovU Sam LINIJU dodala
+        if not self.canvas.winfo_exists():#dodato
+            return  # Exit if canvas no longer exists
 
         self.canvas.delete(self.time)
         self.canvas.delete(self.avg_utilization)
@@ -85,3 +85,13 @@ class Graphs:
         self.data_plot.draw()
         self.canvas.update()
 
+    # NOVA METODA ZA PAMCENJE SLIKA
+    def save_plot(self, filename):
+        """
+        Čuva Matplotlib figuru (koja sadrži 3 podgrafika) kao slikovni fajl.
+        """
+        if self.figure is not None:
+            # Koristimo bbox_inches='tight' da osiguramo da se svi naslovi i labele vide
+            self.figure.savefig(filename, bbox_inches='tight')
+        else:
+            raise AttributeError("Matplotlib figura (self.figure) nije inicijalizovana.")

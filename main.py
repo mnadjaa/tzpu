@@ -16,6 +16,7 @@ from utils.DisplayLog import DisplayLog
 from utils.Proprerties import Properties
 from utils.Options import Options
 
+import csv
 import simpy
 import json
 import time
@@ -29,8 +30,8 @@ from datetime import datetime
 #import threading
 import os
 
-#SEED = 42
-ui = True    #ovde dal hoces UI-------promenila sam sa False na True da se prikazuju grafici------------------------------------------------------
+SEED = 42
+ui = True  #ovde dal hoces UI tj. da se prikazuju grafici
 
 _arrival_pattern = None
 _broker_choice = None
@@ -41,18 +42,19 @@ _resurs_std = Options.RESOURCE_PREPARE_TIME_STD_OPTS
 _set_raspodela = None
 pocetne_vrednosti = [0, 0, 0, 0, True] #mean, arrival, broker, set, initial
 
-_single_run = True
+OUTPUT_CSV_FILE = "rezultati.csv"
+_single_run = False
 one_important_txt = False
 
 _i_ = 0
-args = list(map(lambda x: x.lower(), sys.argv[1:]))
+args = list(map(lambda x: x.lower(), sys.argv[1:]))#argumenti prosledjeni preko komandne liniej
 while _i_ < len(args):
-    #if(args[_i_]=="seed"):
-     #   SEED = int(args[_i_+1])
-      #  _i_+=1
-    if(args[_i_]=="u" or args[_i_]=="ui"):    #elif
-        ui = ((args[_i_+1])[0]=="t" or (args[_i_+1])[0]=="y" or (args[_i_+1])[0]=="true")
+    if(args[_i_]=="seed"):
+        SEED = int(args[_i_+1])
         _i_+=1
+    #if(args[_i_]=="u" or args[_i_]=="ui"):    #elif
+     #   ui = ((args[_i_+1])[0]=="t" or (args[_i_+1])[0]=="y" or (args[_i_+1])[0]=="true")
+      #  _i_+=1
     elif(args[_i_]=="i" or args[_i_]=="iw" or args[_i_]=="initial_wave"):
         _initial_wave = ((args[_i_+1])[0]=="t" or (args[_i_+1])[0]=="y" or (args[_i_+1])[0]=="true")
         _i_+=1
@@ -92,6 +94,9 @@ while _i_ < len(args):
     elif(args[_i_]=="resource_add_number" or args[_i_]=="r_a_n"):
         Properties.RESOURCE_ADD_NUMBER = int(args[_i_+1])
         _i_+=1
+    elif (args[_i_] == "u_c" or args[_i_] == "user_count"):  # <--- DODATO
+        Properties.USER_COUNT = int(args[_i_ + 1])
+        _i_ += 1
     else:
         print(f"Bad argument: {args[_i_]}")
         sys.exit()
@@ -107,6 +112,8 @@ user_scheduler = None
 analytics = None
 canvas = None
 log = None
+print(f"ui= {ui}")
+
 if ui:
     main = tk.Tk()
     main.title("Simulation")
@@ -115,7 +122,6 @@ if ui:
     top_frame.pack(side=tk.TOP, expand=False)
     canvas = tk.Canvas(main, width=1300, height=350, bg="white")
     canvas.pack(side=tk.TOP, expand=False)
-
 ############################################
 # def rnd(tp,idx=None):
 #     return random.choice(tp) if(idx==None) else tp[idx]
@@ -198,7 +204,7 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
 
     analytics.WriteImportant(f"\n{'{'}\n\"id\":\"{Properties.SIMULATION_UUID}\",\"time\":\"{datetime.now()}\",",None)
     analytics.WriteImportant(opcije,"opcije")
-    #analytics.WriteImportant(SEED,"SEED")
+    analytics.WriteImportant(SEED,"SEED")
     #database.WriteImportant(Properties.SLA,"SLA")
     analytics.WriteImportant(Properties.ARRIVAL_PATTERN,"ARRIVAL_PATTERN")
     analytics.WriteImportant(Properties.INITIAL_WAVE_KNOWN,"INITIAL_WAVE_KNOWN")
@@ -222,7 +228,7 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
     ## ako je poznato T = 0 i intenzitet inicijalnog udara
 
     if Properties.INITIAL_WAVE_KNOWN:
-        broker.prepare_more_resources(env, user_scheduler.USERS_NUMBER[-1])
+        broker.prepare_more_resources(env, user_scheduler.USERS_NUMBER[-1])#dodaje onoliko resursa koliko se korisnika dolazi u prvom talasu
 
 
     while len(user_scheduler.INTER_ARRIVAL_TIMES) > 0 and len(user_scheduler.USERS_NUMBER) > 0:
@@ -258,18 +264,94 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
     analytics.WriteImportant(broker.analytics.SLA4_broke,"SLA4_broke ")
     analytics.WriteImportant("},",None)
 
+    # NOVI BLOK KODA: UPISIVANJE GLAVNIH REZULTATA U CSV
+    # ----------------------------------------------------------------------
+
+    # Prikupljanje parametara (isti redosled kao u zaglavlju CSV-a)
+    rezultati = [
+        Properties.SIMULATION_UUID,
+        Properties.RESOURCE_PREPARE_TIME_MEAN,
+        Properties.RESOURCE_PREPARE_TIME_STD,
+        Properties.ARRIVAL_PATTERN,
+        Properties.BROKER_TYPE,
+        Properties.SET_RASPOREDA,
+        Properties.USER_COUNT,
+        Properties.MAX_AVAILABLE_RESOURCES,
+        Properties.CRITICAL_UTILISATION_PERCENT,
+        Properties.READY_COUNT,
+        Properties.RESOURCE_ADD_NUMBER,
+        Properties.INITIAL_WAVE_KNOWN,
+        # Prikupljanje izlaznih metrika
+        graph.avg_wait(graph.utilization),  # avg_utilization
+        graph.avg_wait(graph.wait_for_resource),  # avg_wait
+        broker.analytics.SLA1_broke + broker.analytics.SLA2_broke + broker.analytics.SLA3_broke + broker.analytics.SLA4_broke,
+        # Ukupno SLA kršenja
+        broker.resource_provider.get_resource_count()  # Finalni broj resursa
+    ]
+
+    write_results_to_csv(rezultati)  # Poziv nove funkcije
+
+    # ----------------------------------------------------------------------
+
     env.process(broker.end_process())
     analytics.writeAll()
     analytics.clear_logs()
     print("DONE !!!!!!!!!!!!!!!!!")
     DONE = True
     if ui:
+        #blok koji cuva slike
+        try:
+            output_dir = "simulation_graphs"
+            os.makedirs(output_dir, exist_ok=True)
+            filename = os.path.join(output_dir, f"simulacija_{Properties.SIMULATION_UUID}.png")
+            graph.save_plot(filename)
+            print(f"Grafik prozora sačuvan kao: {filename}")
+        except AttributeError:
+            print("Upozorenje: Klasa Graphs nema implementiranu metodu 'save_plot'. Grafik nije sačuvan.")
+        except Exception as e:
+            print(f"Greška prilikom čuvanja grafika: {e}")
+
         create_window(broker)#dodala sam broker parametar
         #input()
         #main.destroy()
     #else:
     if _single_run: sys.exit()
 
+
+
+def write_results_to_csv(data):
+    # Definisanje zaglavlja (Header) CSV fajla
+    header = [
+        "SIMULATION_UUID",
+        "RESOURCE_PREPARE_TIME_MEAN",
+        "RESOURCE_PREPARE_TIME_STD",
+        "ARRIVAL_PATTERN",
+        "BROKER_TYPE",
+        "SET_RASPOREDA",
+        "USER_COUNT",
+        "MAX_AVAILABLE_RESOURCES",
+        "CRITICAL_UTILISATION_PERCENT",
+        "READY_COUNT",
+        "RESOURCE_ADD_NUMBER",
+        "INITIAL_WAVE_KNOWN",
+        "AVG_UTILIZATION",
+        "AVG_WAIT_TIME",
+        "TOTAL_SLA_BROKEN",
+        "FINAL_RESOURCE_COUNT"
+    ]
+
+    # Određivanje da li je potrebno kreirati fajl i upisati zaglavlje
+    file_exists = os.path.exists(OUTPUT_CSV_FILE)
+
+    with open(OUTPUT_CSV_FILE, mode='a', newline='') as file: #mod a dodaje u fajl ako on vec postoji
+        writer = csv.writer(file)
+
+        # Ako fajl ne postoji, upisujemo zaglavlje
+        if not file_exists:
+            writer.writerow(header)
+
+        # Upisujemo rezultate trenutne simulacije
+        writer.writerow(data)
 
 def create_window(broker):
     t = tk.Toplevel(main)
@@ -280,6 +362,7 @@ def create_window(broker):
                          f"Resource count: {broker.resource_provider.get_resource_count()}\n")
                          #f"SLA brakes: {broker.analytics.SLA_broke}")
     l.pack(side="top", fill="both", expand=True, padx=10, pady=10)
+
     button = tk.Button(t, text="Close", command=close)
     button.pack(side="top", padx=10, pady=10)
 
@@ -291,8 +374,8 @@ def close():
 def test_option(opcije):
     global DONE, analytics, user_scheduler, graph, main, canvas, log #,database
     DONE = False
-    #random.seed(SEED)
-    #np.random.seed(seed=SEED)
+    random.seed(SEED)
+    np.random.seed(seed=SEED)
     if not one_important_txt:
         Properties.IMPORTANT_TXT_SUFFIX = json.dumps(opcije)
 
@@ -310,7 +393,7 @@ def test_option(opcije):
     analytics = Analytics()
     analytics.clear_logs()  # Poziv nove metode za čišćenje keša
 
-    env = simpy.rt.RealtimeEnvironment(factor=(5.0 / Properties.TIME_SPEEDUP), strict=False)   #🦋 1.0 faktor moze da se menja da sim napreduje brze/sporije
+    env = simpy.rt.RealtimeEnvironment(factor=(5.0 / Properties.TIME_SPEEDUP), strict=False)   # 1.0 faktor moze da se menja da sim napreduje brze/sporije
 
     analytics = Analytics()
 
@@ -346,45 +429,244 @@ def test_option(opcije):
         main.mainloop()
 
 
-def start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number):
+def start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number,user_count):
     #time.sleep(0.2)
     #-------------------python sam stavila umesto python3
     #os.system(f"python3 main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number}")
-    os.system(f"python main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number}")
+    os.system(f"python main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number} u_c {user_count}")
 
-
+"""STARA     #🦋    #🦋    #🦋    #🦋    #🦋    #🦋    #🦋
 if _single_run == False:
-    for tp_mean_opt in Options.RESOURCE_PREPARE_TIME_MEAN_OPTS[pocetne_vrednosti[0]:]:
-        Properties.RESOURCE_PREPARE_TIME_MEAN = tp_mean_opt
-        Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
-        for arrival_pat in range(pocetne_vrednosti[1], 3):
-            arrival_pat += 1
-            Properties.ARRIVAL_PATTERN = arrival_pat
-            for broker_type in range(pocetne_vrednosti[2], 3):
-                Properties.BROKER_TYPE = broker_type
-                for set_raspodela in range(pocetne_vrednosti[3], 9):
-                    Properties.SET_RASPOREDA = set_raspodela
-                    opcije = [tp_mean_opt,arrival_pat,broker_type,set_raspodela,pocetne_vrednosti[-1]]
-                    for max_available_resources in range(20,150):
-                        for critical_utilisation_percent in [0.2,0.4,0.6,0.8]:
-                            for ready_count in range(10,100):
-                                #if ready_count == max_available_resources: continue
-                                if ready_count > max_available_resources: continue
-                                for resource_add_number in [1,5,10,20]:
-                                    if Properties.ARRIVAL_PATTERN == 2:
-                                        if pocetne_vrednosti[-1]:
-                                            opcije[-1] = True
-                                            Properties.INITIAL_WAVE_KNOWN = True
-                                            start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number)
-                                        opcije[-1] = False
-                                        Properties.INITIAL_WAVE_KNOWN = False
-                                        start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number)
-                                    else:
-                                        start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number)
-                                    pocetne_vrednosti[-1] = True
-                pocetne_vrednosti[3] = 0
-            pocetne_vrednosti[2] = 0
-        pocetne_vrednosti[1] = 0
+    with open("parametri.csv", newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            Properties.RESOURCE_PREPARE_TIME_MEAN = float(row["RESOURCE_PREPARE_TIME_MEAN"])
+            Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
+            Properties.ARRIVAL_PATTERN = int(row["ARRIVAL_PATTERN"])
+            Properties.BROKER_TYPE = int(row["BROKER_TYPE"])
+            Properties.SET_RASPOREDA = int(row["SET_RASPOREDA"])
+            Properties.INITIAL_WAVE_KNOWN = row["INITIAL_WAVE"].lower() == "true"
+
+            opcije = [
+                Properties.RESOURCE_PREPARE_TIME_MEAN,
+                Properties.ARRIVAL_PATTERN,
+                Properties.BROKER_TYPE,
+                Properties.SET_RASPOREDA,
+                Properties.INITIAL_WAVE_KNOWN
+            ]
+            user_count= Properties.USER_COUNT = int(row["USER_COUNT"])
+            max_available_resources = int(row["MAX_AVAILABLE_RESOURCES"])
+            critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
+            ready_count = int(row["READY_COUNT"])
+            resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
+
+            start_proc(opcije, ready_count, max_available_resources,
+                       critical_utilisation_percent, resource_add_number,user_count)
+
+
+"""
+#NOVA     #🦋    #🦋    #🦋    #🦋    #🦋    #🦋
+if _single_run == False:
+    # Učitaj sve redove iz CSV-a
+    #pomocna promenljiva
+    nije_zaustavljeno=True
+    all_rows = []
+    with open("parametri.csv", newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            all_rows.append(row)
+
+    total_simulations = len(all_rows)
+    completed = []
+    remaining = list(range(len(all_rows)))
+
+    print(f"Ukupno simulacija za izvršavanje: {total_simulations}")
+
+    while remaining:
+        # Pokreni sledeću grupu simulacija
+        batch_size = min(Properties.PAUSE_INTERVAL, len(remaining))
+        current_batch = remaining[:batch_size]
+
+        for idx in current_batch:
+            row = all_rows[idx]
+
+            Properties.RESOURCE_PREPARE_TIME_MEAN = float(row["RESOURCE_PREPARE_TIME_MEAN"])
+            Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
+            Properties.ARRIVAL_PATTERN = int(row["ARRIVAL_PATTERN"])
+            Properties.BROKER_TYPE = int(row["BROKER_TYPE"])
+            Properties.SET_RASPOREDA = int(row["SET_RASPOREDA"])
+            Properties.INITIAL_WAVE_KNOWN = row["INITIAL_WAVE"].lower() == "true"
+
+            opcije = [
+                Properties.RESOURCE_PREPARE_TIME_MEAN,
+                Properties.ARRIVAL_PATTERN,
+                Properties.BROKER_TYPE,
+                Properties.SET_RASPOREDA,
+                Properties.INITIAL_WAVE_KNOWN
+            ]
+            user_count = Properties.USER_COUNT = int(row["USER_COUNT"])
+            max_available_resources = int(row["MAX_AVAILABLE_RESOURCES"])
+            critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
+            ready_count = int(row["READY_COUNT"])
+            resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
+
+            print(f"\n{'=' * 60}")
+            print(f"Pokretanje simulacije {idx + 1}/{total_simulations}")
+            print(f"{'=' * 60}")
+
+            start_proc(opcije, ready_count, max_available_resources,
+                       critical_utilisation_percent, resource_add_number, user_count)
+
+            completed.append(idx)
+
+        # Ukloni završene iz preostalih
+        remaining = remaining[batch_size:]
+
+        # Ako ima još simulacija, pitaj korisnika
+        if remaining:
+            print(f"\n{'=' * 70}")
+            print(f"Završeno {len(completed)}/{total_simulations} simulacija")
+            print(f"Preostalo: {len(remaining)} simulacija")
+            print(f"{'=' * 70}")
+
+            while True:
+                print("\nOpcije:")
+                print(f"1 - Nastavi normalno sa pokretanjem simulacija, odakle je prekinuto")
+                print("2 - Pokreni određenu simulaciju")
+                print(f"3 - Nastavi sa pokretanjem simulacija od određene simulacije")
+                print("4 - Završi sa simulacijama")
+
+                choice = input("\nIzaberite opciju (1/2/3/4): ").strip()
+
+                if choice == '1':
+                    print("\nNastavljam sa simulacijama...\n")
+                    break
+                elif choice == '2':
+                    print(f"\nDostupne simulacije: 1-{total_simulations}")
+                    print(
+                        f"Završene do sada: {[x + 1 for x in sorted(completed)[:10]]}{'...' if len(completed) > 10 else ''}")
+
+                    try:
+                        sim_num = int(input("Unesite broj simulacije (1-" + str(total_simulations) + "): "))
+                        if 1 <= sim_num <= total_simulations:
+                            
+                            idx = sim_num - 1
+                            row = all_rows[idx]
+
+                            Properties.RESOURCE_PREPARE_TIME_MEAN = float(row["RESOURCE_PREPARE_TIME_MEAN"])
+                            Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
+                            Properties.ARRIVAL_PATTERN = int(row["ARRIVAL_PATTERN"])
+                            Properties.BROKER_TYPE = int(row["BROKER_TYPE"])
+                            Properties.SET_RASPOREDA = int(row["SET_RASPOREDA"])
+                            Properties.INITIAL_WAVE_KNOWN = row["INITIAL_WAVE"].lower() == "true"
+
+                            opcije = [
+                                Properties.RESOURCE_PREPARE_TIME_MEAN,
+                                Properties.ARRIVAL_PATTERN,
+                                Properties.BROKER_TYPE,
+                                Properties.SET_RASPOREDA,
+                                Properties.INITIAL_WAVE_KNOWN
+                            ]
+                            user_count = Properties.USER_COUNT = int(row["USER_COUNT"])
+                            max_available_resources = int(row["MAX_AVAILABLE_RESOURCES"])
+                            critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
+                            ready_count = int(row["READY_COUNT"])
+                            resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
+
+                            print(f"\n{'=' * 60}")
+                            print(f"Ponovno pokretanje simulacije {sim_num}")
+                            print(f"{'=' * 60}")
+
+                            start_proc(opcije, ready_count, max_available_resources,
+                                       critical_utilisation_percent, resource_add_number, user_count)
+
+                            print(f"\nSimulacija {sim_num} ponovo izvršena!")
+                        else:
+                            print("Nevažeći broj simulacije!")
+                    except ValueError:
+                        print("Molim unesite validan broj!")
+
+                elif choice == '4':
+                    print("\nZaustavljanje simulacija...")
+                    remaining = []
+                    nije_zaustavljeno=False
+                    break
+                elif choice == '3':
+                    try:
+                        start_index = int(input("Unesite broj simulacije od koje želite da nastavite: ")) - 1
+                        if 0 <= start_index < total_simulations:
+                            remaining = list(range(start_index, total_simulations))
+                            print(
+                                f"\nNastavljam sledećih {min(Properties.PAUSE_INTERVAL, len(remaining))} simulacija od {start_index + 1}-te...\n")
+                            break
+                        else:
+                            print("Nevažeći broj simulacije!")
+                    except ValueError:
+                        print("Molim unesite validan broj!")
+                else:
+                    print("Nevažeća opcija! Unesite 1, 2, 3 ili 4.")
+
+    print(f"\n{'=' * 70}")
+    print(f"SVE SIMULACIJE ZAVRŠENE!")
+    print(f"Ukupno izvršeno: {len(completed)}/{total_simulations}")
+    print(f"{'=' * 70}")
+
+    # kad se zavrse sve korisnik moze da pokrene odredjenu ili da zatvori program
+    while nije_zaustavljeno: #True:
+        print("\nSve simulacije su završene.")
+        print("Opcije:")
+        print("1 - Pokreni ponovo određenu simulaciju")
+        print("2 - Završi program")
+
+        post_choice = input("\nIzaberite opciju (1/2): ").strip()
+
+        if post_choice == '1':
+            print(f"\nDostupne simulacije: 1-{total_simulations}")
+            try:
+                sim_num = int(input("Unesite broj simulacije koju želite da pokrenete ponovo: "))
+                if 1 <= sim_num <= total_simulations:
+                    idx = sim_num - 1
+                    row = all_rows[idx]
+
+                    Properties.RESOURCE_PREPARE_TIME_MEAN = float(row["RESOURCE_PREPARE_TIME_MEAN"])
+                    Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
+                    Properties.ARRIVAL_PATTERN = int(row["ARRIVAL_PATTERN"])
+                    Properties.BROKER_TYPE = int(row["BROKER_TYPE"])
+                    Properties.SET_RASPOREDA = int(row["SET_RASPOREDA"])
+                    Properties.INITIAL_WAVE_KNOWN = row["INITIAL_WAVE"].lower() == "true"
+
+                    opcije = [
+                        Properties.RESOURCE_PREPARE_TIME_MEAN,
+                        Properties.ARRIVAL_PATTERN,
+                        Properties.BROKER_TYPE,
+                        Properties.SET_RASPOREDA,
+                        Properties.INITIAL_WAVE_KNOWN
+                    ]
+                    user_count = Properties.USER_COUNT = int(row["USER_COUNT"])
+                    max_available_resources = int(row["MAX_AVAILABLE_RESOURCES"])
+                    critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
+                    ready_count = int(row["READY_COUNT"])
+                    resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
+
+                    print(f"\n{'=' * 60}")
+                    print(f"Ponovno pokretanje simulacije {sim_num}")
+                    print(f"{'=' * 60}")
+
+                    start_proc(opcije, ready_count, max_available_resources,
+                               critical_utilisation_percent, resource_add_number, user_count)
+
+                    print(f"\nSimulacija {sim_num} ponovo izvršena!\n")
+
+                else:
+                    print("Nevažeći broj simulacije!")
+            except ValueError:
+                print("Unesite validan broj!")
+
+        elif post_choice == '2':
+            print("\nProgram je završen.")
+            break
+        else:
+            print("Nevažeća opcija! Unesite 1 ili 2.")
 
 else:
     if _resurs_mean is None:

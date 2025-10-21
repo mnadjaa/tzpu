@@ -16,7 +16,7 @@ from entities.EventType import EventType
 from utils.Analytics import Analytics # DODAJTE OVU LINIJU
 
 
-database = Analytics()#🐻
+database = Analytics()
 
 def bar_graph():
     labels = ['1', '2', '3', '4', '5']

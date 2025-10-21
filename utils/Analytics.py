@@ -12,8 +12,6 @@ from utils.Proprerties import Properties
 
 class Analytics:
     # ----------------------------------------------------
-    # PARAMETRI I KEŠ ZA LOGOVANJE (IZ DATABASEUTILS)
-    # ----------------------------------------------------
     fileWrites = {
         "LOGS/Events.csv": "",
         "LOGS/Simulation.csv": "",
@@ -37,8 +35,6 @@ class Analytics:
     utilization_percent = defaultdict(lambda: [])
     waits_for_getting = defaultdict(lambda: [])
 
-    # ----------------------------------------------------
-    # UGRAĐENE METODE ZA LOGOVANJE (IZ DATABASEUTILS)
     # ----------------------------------------------------
 
     def clear_logs(self):
@@ -73,7 +69,7 @@ class Analytics:
                 myfile.write("\n" + str_)
         print("LOGGING COMPLETE.")
 
-    # ------------------ LOGGING METODE KOJE KORISTI MAIN.PY -------------------
+    # -------------------------------------------------------------------------------------------
 
     # Ekvivalent WriteEvent
     def WriteEvent(self, event_type: str, simulation_uuid: str, user_id: str, timestamp: str, duration: str):
@@ -115,9 +111,7 @@ class Analytics:
         for name, value in Properties.get_parameters():
             self.WriteProperties(Properties.SIMULATION_UUID, name, value)
 
-    # ----------------------------------------------------
-    # ORIGINALNE METODE ZA ANALITIKU (IZVORNO IZ ANALYTICS)
-    # ----------------------------------------------------
+    # ----------------------------------------------------    # ----------------------------------------------------
 
     def register_arrivals(self, time):
         self.arrivals[int(time)] += 1

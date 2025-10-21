@@ -8,8 +8,10 @@ class Properties:
     TIME_SPEEDUP = 2000000
     SIMULATION_DURATION_MINUTES = 200
 
+    PAUSE_INTERVAL=2# 999999999 #posle koliko simulacija se korisnik pita da li da nastavi dalje da pokrece simulacije
+
     CONSTANT_USER_COUNT_ENABLED = True
-    USER_COUNT = 200
+    USER_COUNT = 50
 
     NEXT_LOGIN_MEAN = 5
     NEXT_LOGIN_STD = 3
@@ -21,7 +23,7 @@ class Properties:
 
     ####### Sledeca 4 mi optimizujemo (menjamo):
     READY_COUNT = 10                                          # koliko resursa spremno na startu
-    MAX_AVAILABLE_RESOURCES = 10#150                               # koliko max imamo resursa available
+    MAX_AVAILABLE_RESOURCES = 150                               # koliko max imamo resursa available
     CRITICAL_UTILISATION_PERCENT =0.6                                # kada da sprema nove resurse
     RESOURCE_ADD_NUMBER = 1                                         # ovoliko resursa se dodaju kad critical util
     #RESOURCE_ADD_RATE = 3   # ovo se ne koristi nigde
@@ -29,7 +31,7 @@ class Properties:
     NUMBER_OF_WORKERS = 3
 
     RESOURCE_USAGE_TIME_MEAN = 60
-    RESOURCE_USAGE_TIME_STD = 15
+    RESOURCE_USAGE_TIME_STD = 5#15
 
     RESOURCE_PREPARE_TIME_MEAN = 2#5
     RESOURCE_PREPARE_TIME_STD = 1#2
@@ -55,9 +57,9 @@ class Properties:
     SLA2 = 0.5
     SLA3 = 1.0
     SLA4 = 1.5
-    ARRIVAL_PATTERN = 3 #za 3 ne radi lepo
+    ARRIVAL_PATTERN = 3
     INITIAL_WAVE_KNOWN = True
-    BROKER_TYPE = 2
+    BROKER_TYPE = 1
 
     IMPORTANT_TXT_SUFFIX = ""
 
