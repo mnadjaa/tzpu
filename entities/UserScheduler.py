@@ -121,19 +121,19 @@ class UserScheduler:
         #####za mesanje vrednosti
         def getSet(setIdx):#za mixdis klasu priprema parametre za generisanje mesovite distribucije
             ##"set","weight","distribution","alpha","beta"
-            xlsx = [#lista tuplova 1. el tupla je ime 2. j
-                ("duration_C1_N", [
+            xlsx = [#lista tuplova 1. el tupla je ime 2. j    #lognormal - vecina kratkih i par izusetno dugih, weiball - brze i krake sesije, normalna
+                ("duration_C1_N", [#ponosanje normalnih korisnika      #0
                     (0.6724, "Lognormal", 4.5772, 0.1835),#vrv da ce da bude izabrana ta distribucija, distribucija, 1. i 2. parametar distribucije
-                    (0.1137, "Weibull", 2.7327, 0.586),
+                    (0.1137, "Weibull", 2.7327, 0.586),#tj. prvi parametar je procenat korisnika koji ima tu raspodelu
                     (0.1345, "Normal", 5.1684, 2.2204),
                     (0.0794, "Normal", 9.5069, 2.4728)]),
-                ("duration_C1_pc_D", [
+                ("duration_C1_pc_D", [#1
                     (0.1985, "Lognormal", 2.1667, 0.2421),
                     (0.4922, "Weibull", 4.54, 0.3426),
                     (0.2982, "Weibull", 4.9432, 0.3223),
                     (0.0015, "Normal", 5.09E-13, 1.00E-08),
                     (0.0096, "Normal", 1.6392, 1.3063)]),
-                ("duration_C2_N", [
+                ("duration_C2_N", [#2
                     (0.2254, "Lognormal", 2.4633, 0.2729),
                     (0.7746, "Normal", 158.26, 2435.91)]),
                 ("duration_C2_pc_D", [
@@ -155,7 +155,7 @@ class UserScheduler:
                 ("duration_C1_3_N", [
                     (0.2879, "Lognormal", 1.9648, 0.2977),
                     (0.7121, "Weibull", 4.7319, 0.3754)]),
-                ("duration_C1_4_N", [
+                ("duration_C1_4_N", [#8=-1 (DEFAULTNO)
                     (0.3202, "Weibull", 2.0401, 0.3978),
                     (0.6798, "Weibull", 4.8025, 0.527)])
             ]

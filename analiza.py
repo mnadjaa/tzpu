@@ -1,7 +1,7 @@
 import json
 import numpy as np
 
-f = open('mergedFiltered2.txt')
+f = open('merged_output.txt')#'mergedFiltered2.txt'
 
 svi = json.load(f)
 poOpcijama = dict()
@@ -11,6 +11,12 @@ print(len(svi))
 
 for i in svi:
     if(i["BROKER_TYPE"] != 3): continue
+
+
+    ###promenaaaaaaaaaaaa
+    opcije_key = tuple(i["opcije"]) if isinstance(i["opcije"], list) else i["opcije"]
+    ###
+
     if not (i["opcije"] in poOpcijama):
         poOpcijama[i["opcije"]] = []
     parametriStr = f'{i["READY_COUNT"]}-{i["MAX_AVAILABLE_RESOURCES"]}-{i["CRITICAL_UTILISATION_PERCENT"]}-{i["RESOURCE_ADD_NUMBER"]}'
@@ -36,7 +42,12 @@ for i in svi:
     #     input()
     # poParametrima2[parametriStr]["last"] = xxx
     poParametrima[parametriStr].append(i)
-    poOpcijama[i["opcije"]].append(i)
+
+    #Promenila sam ovo:
+    #poOpcijama[i["opcije"]].append(i)
+    poOpcijama[opcije_key].append(i)
+
+
 for v in poParametrima2:
     # poParametrima2[v]["score1"] = np.mean(list(map(lambda x: x["score1"],poParametrima[v])))
     # poParametrima2[v]["score2"] = np.mean(list(map(lambda x: x["score2"],poParametrima[v])))

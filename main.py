@@ -264,9 +264,6 @@ def start_simulation(env: RealtimeEnvironment, broker, user_scheduler,opcije):
     analytics.WriteImportant(broker.analytics.SLA4_broke,"SLA4_broke ")
     analytics.WriteImportant("},",None)
 
-    # NOVI BLOK KODA: UPISIVANJE GLAVNIH REZULTATA U CSV
-    # ----------------------------------------------------------------------
-
     # Prikupljanje parametara (isti redosled kao u zaglavlju CSV-a)
     rezultati = [
         Properties.SIMULATION_UUID,
@@ -354,6 +351,8 @@ def write_results_to_csv(data):
         writer.writerow(data)
 
 def create_window(broker):
+    if not ui:
+        return  # ne prikazuj ništa ako je UI isključen
     t = tk.Toplevel(main)
     t.wm_title("Finished")
     l = tk.Label(t, text=f"Simulation uuid: {Properties.SIMULATION_UUID} \n"
@@ -435,37 +434,6 @@ def start_proc(opcije,ready_count,max_available_resources,critical_utilisation_p
     #os.system(f"python3 main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number}")
     os.system(f"python main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number} u_c {user_count}")
 
-"""STARA     #🦋    #🦋    #🦋    #🦋    #🦋    #🦋    #🦋
-if _single_run == False:
-    with open("parametri.csv", newline='', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            Properties.RESOURCE_PREPARE_TIME_MEAN = float(row["RESOURCE_PREPARE_TIME_MEAN"])
-            Properties.RESOURCE_PREPARE_TIME_STD = Options.RESOURCE_PREPARE_TIME_STD_OPTS
-            Properties.ARRIVAL_PATTERN = int(row["ARRIVAL_PATTERN"])
-            Properties.BROKER_TYPE = int(row["BROKER_TYPE"])
-            Properties.SET_RASPOREDA = int(row["SET_RASPOREDA"])
-            Properties.INITIAL_WAVE_KNOWN = row["INITIAL_WAVE"].lower() == "true"
-
-            opcije = [
-                Properties.RESOURCE_PREPARE_TIME_MEAN,
-                Properties.ARRIVAL_PATTERN,
-                Properties.BROKER_TYPE,
-                Properties.SET_RASPOREDA,
-                Properties.INITIAL_WAVE_KNOWN
-            ]
-            user_count= Properties.USER_COUNT = int(row["USER_COUNT"])
-            max_available_resources = int(row["MAX_AVAILABLE_RESOURCES"])
-            critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
-            ready_count = int(row["READY_COUNT"])
-            resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
-
-            start_proc(opcije, ready_count, max_available_resources,
-                       critical_utilisation_percent, resource_add_number,user_count)
-
-
-"""
-#NOVA     #🦋    #🦋    #🦋    #🦋    #🦋    #🦋
 if _single_run == False:
     # Učitaj sve redove iz CSV-a
     #pomocna promenljiva
