@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
 import json
 import os
 import glob
 
-
-def merge_txt_files(input_folder='.', output_file='merged_output.txt'):
-    """
-    Spaja sve tekstualne fajlove iz foldera u jedan JSON, filtrirajući neželjene podatke
-    """
+def merge_txt_files(input_folder='./Logs', output_file='merged_output.txt'):
     # Polja koja želimo da zadržimo
     wanted_fields = [
         'BROKER_TYPE',
@@ -135,7 +130,6 @@ def merge_txt_files(input_folder='.', output_file='merged_output.txt'):
     if merged_data:
         print(f"\nPrimer prvog objekta:")
         print(json.dumps(merged_data[0], indent=2, ensure_ascii=False))
-
 
 # Pokreni spajanje
 merge_txt_files(input_folder='.', output_file='merged_output.txt')
