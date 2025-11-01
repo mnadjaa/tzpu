@@ -1,0 +1,75 @@
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 150 , crit: 0.6 , add: 1
+	id:10-150-0.6-1
+	score1:	  5.95
+	score2:	  -129.05
+	scoreG:	  0.59
+
+	avg_util:	  59.50 %   	max: 60.20 %	min: 58.80 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 30 , crit: 0.4 , add: 5
+	id:20-30-0.4-5
+	score1:	  5.82
+	score2:	  -21.18
+	scoreG:	  0.58
+
+	avg_util:	  58.20 %   	max: 58.20 %	min: 58.20 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 30 , crit: 0.4 , add: 5
+	id:10-30-0.4-5
+	score1:	  4.58
+	score2:	  -22.42
+	scoreG:	  0.46
+
+	avg_util:	  45.80 %   	max: 45.80 %	min: 45.80 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 30 , max: 80 , crit: 0.6 , add: 10
+	id:30-80-0.6-10
+	score1:	  6.12
+	score2:	  -65.88
+	scoreG:	  -0.39
+
+	avg_util:	  69.20 %   	max: 69.20 %	min: 69.20 %
+	avg_wait:	  0.20 min   	max: 0.20 min	min: 0.20 min
+
+	SLA 0.1:	  1.00       	max: 1.00    	min: 1.00    
+	SLA 0.5:	  1.00       	max: 1.00    	min: 1.00    
+	SLA 1.0:	  1.00       	max: 1.00    	min: 1.00    
+	SLA 1.5:	  1.00       	max: 1.00    	min: 1.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.4 , add: 5
+	id:20-50-0.4-5
+	score1:	  5.09
+	score2:	  -39.91
+	scoreG:	  -1.49
+
+	avg_util:	  66.90 %   	max: 66.90 %	min: 66.90 %
+	avg_wait:	  0.40 min   	max: 0.40 min	min: 0.40 min
+
+	SLA 0.1:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 0.5:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 1.0:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 1.5:	  2.00       	max: 2.00    	min: 2.00    

@@ -10,7 +10,7 @@ poParametrima2 = dict()
 print(len(svi))
 
 for i in svi:
-    if(i["BROKER_TYPE"] != 3): continue
+    if(i["BROKER_TYPE"] != 3): continue#preskace sve koji nemaju tu vrednost za broker
 
 
     ###promenaaaaaaaaaaaa
@@ -27,8 +27,11 @@ for i in svi:
     score2 = -i["MAX_AVAILABLE_RESOURCES"]
     scoreG = i["avg_utilization"] - i["avg_wait"]*40
     ut = 0
-    for u in json.loads(i["USAGE_TIME"]):
-        ut += u
+    if "USAGE_TIME" in i:
+        for u in json.loads(i["USAGE_TIME"]):
+            ut += u
+    else:
+        ut = 0
     score1 = -(ut / (i["avg_utilization"]/100.0)) / 109.0
     i["score1"] = scoreG * 0.1 + 0.9 * (score1)
     i["score2"] = score2 *0.9 + scoreG * 0.1

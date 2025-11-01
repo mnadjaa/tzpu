@@ -42,7 +42,7 @@ _resurs_std = Options.RESOURCE_PREPARE_TIME_STD_OPTS
 _set_raspodela = None
 pocetne_vrednosti = [0, 0, 0, 0, True] #mean, arrival, broker, set, initial
 
-OUTPUT_CSV_FILE = "rezultati.csv"
+OUTPUT_CSV_FILE = "rezultatiBroker=2.csv"
 _single_run = False
 one_important_txt = False
 

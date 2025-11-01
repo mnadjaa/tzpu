@@ -1,0 +1,60 @@
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 30 , crit: 0.4 , add: 5
+	id:10-30-0.4-5
+	score1:	  4.58
+	score2:	  -22.42
+	scoreG:	  0.46
+
+	avg_util:	  45.80 %   	max: 45.80 %	min: 45.80 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 40 , max: 100 , crit: 0.8 , add: 20
+	id:40-100-0.8-20
+	score1:	  3.77
+	score2:	  -86.23
+	scoreG:	  0.38
+
+	avg_util:	  37.70 %   	max: 37.70 %	min: 37.70 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.4 , add: 5
+	id:20-50-0.4-5
+	score1:	  4.94
+	score2:	  -40.06
+	scoreG:	  -1.51
+
+	avg_util:	  65.40 %   	max: 65.40 %	min: 65.40 %
+	avg_wait:	  0.40 min   	max: 0.40 min	min: 0.40 min
+
+	SLA 0.1:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 0.5:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 1.0:	  2.00       	max: 2.00    	min: 2.00    
+	SLA 1.5:	  2.00       	max: 2.00    	min: 2.00    
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 10 , crit: 0.6 , add: 1
+	id:10-10-0.6-1
+	score1:	  -430.84
+	score2:	  -439.84
+	scoreG:	  -156.08
+
+	avg_util:	  92.97 %   	max: 94.40 %	min: 91.90 %
+	avg_wait:	  110.03 min   	max: 132.80 min	min: 89.30 min
+
+	SLA 0.1:	  113.00       	max: 135.00    	min: 82.00    
+	SLA 0.5:	  113.00       	max: 135.00    	min: 82.00    
+	SLA 1.0:	  112.67       	max: 135.00    	min: 81.00    
+	SLA 1.5:	  112.33       	max: 135.00    	min: 81.00    

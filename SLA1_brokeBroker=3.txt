@@ -1,0 +1,45 @@
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.4 , add: 5
+	id:20-50-0.4-5
+	score1:	  -126.73
+	score2:	  -171.73
+	scoreG:	  -54.80
+
+	avg_util:	  81.68 %   	max: 86.50 %	min: 61.20 %
+	avg_wait:	  33.73 min   	max: 52.30 min	min: 0.40 min
+
+	SLA 0.1:	  42.12       	max: 76.00    	min: 2.00    
+	SLA 0.5:	  42.12       	max: 76.00    	min: 2.00    
+	SLA 1.0:	  42.12       	max: 76.00    	min: 2.00    
+	SLA 1.5:	  42.12       	max: 76.00    	min: 2.00    
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 150 , crit: 0.6 , add: 1
+	id:10-150-0.6-1
+	score1:	  -269.00
+	score2:	  -404.00
+	scoreG:	  -64.40
+
+	avg_util:	  85.05 %   	max: 94.90 %	min: 78.70 %
+	avg_wait:	  69.38 min   	max: 195.80 min	min: 19.30 min
+
+	SLA 0.1:	  37.50       	max: 104.00    	min: 13.00    
+	SLA 0.5:	  37.50       	max: 104.00    	min: 13.00    
+	SLA 1.0:	  37.50       	max: 104.00    	min: 13.00    
+	SLA 1.5:	  37.50       	max: 104.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 30 , crit: 0.4 , add: 5
+	id:10-30-0.4-5
+	score1:	  -109.59
+	score2:	  -136.59
+	scoreG:	  -75.96
+
+	avg_util:	  88.10 %   	max: 88.10 %	min: 88.10 %
+	avg_wait:	  29.60 min   	max: 29.60 min	min: 29.60 min
+
+	SLA 0.1:	  65.00       	max: 65.00    	min: 65.00    
+	SLA 0.5:	  65.00       	max: 65.00    	min: 65.00    
+	SLA 1.0:	  65.00       	max: 65.00    	min: 65.00    
+	SLA 1.5:	  65.00       	max: 65.00    	min: 65.00    
