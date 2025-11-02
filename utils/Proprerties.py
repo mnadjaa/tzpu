@@ -8,7 +8,7 @@ class Properties:
     TIME_SPEEDUP = 2000000
     SIMULATION_DURATION_MINUTES = 200
 
-    PAUSE_INTERVAL=30# 999999999 #posle koliko simulacija se korisnik pita da li da nastavi dalje da pokrece simulacije
+    PAUSE_INTERVAL=300# 999999999 #posle koliko simulacija se korisnik pita da li da nastavi dalje da pokrece simulacije
 
     CONSTANT_USER_COUNT_ENABLED = True
     USER_COUNT = 50
