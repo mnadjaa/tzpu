@@ -30,8 +30,8 @@ from datetime import datetime
 #import threading
 import os
 
-SEED = 42
-ui = True  #ovde dal hoces UI tj. da se prikazuju grafici
+SEED = 422
+ui = False  #ovde dal hoces UI tj. da se prikazuju grafici
 
 _arrival_pattern = None
 _broker_choice = None

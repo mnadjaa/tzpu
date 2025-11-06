@@ -1,0 +1,15 @@
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 150 , crit: 0.2 , add: 1
+	id:10-150-0.2-1
+	score1:	  -107.45
+	score2:	  -242.45
+	scoreG:	  -31.74
+
+	avg_util:	  73.55 %   	max: 84.80 %	min: 62.30 %
+	avg_wait:	  28.70 min   	max: 53.30 min	min: 4.10 min
+
+	SLA 0.1:	  21.00       	max: 31.00    	min: 11.00    
+	SLA 0.5:	  21.00       	max: 31.00    	min: 11.00    
+	SLA 1.0:	  21.00       	max: 31.00    	min: 11.00    
+	SLA 1.5:	  21.00       	max: 31.00    	min: 11.00    

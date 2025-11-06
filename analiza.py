@@ -2,7 +2,15 @@ import json
 import numpy as np
 from matplotlib.contour import ContourSet
 
-f = open('merged_output.txt')#'mergedFiltered2.txt'
+with open('mergedFiltered2.txt', 'r', encoding='utf-8') as f:
+    content = f.read().strip()
+if content.endswith(','):
+    content = content[:-1]
+content = '[' + content + ']'
+with open('mergedOutput.txt', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+f = open('mergedOutput.txt')#mergedFiltered2.txt
 
 svi = json.load(f)
 poOpcijama = dict()
@@ -15,13 +23,14 @@ for i in svi:
     #if(i["BROKER_TYPE"] != 3): continue#preskace sve koji nemaju tu vrednost za broker
     ###############
     #####ZA SET RASPOREDA:
+
     if "opcije" not in i:#or not isinstance(i["opcije"], (list, tuple)) or len(i["opcije"]) <= 4
         continue  # preskače ako opcije ne postoje
 
     if isinstance(i["opcije"], str):
         i["opcije"] = json.loads(i["opcije"].replace("True", "true").replace("False", "false"))
 
-    if i["opcije"][3] != 2:#set rasp je 4. vredn u opcijama, analiziramo 0,2,4
+    if i["opcije"][3] != 0:#set rasp je 4. vredn u opcijama, analiziramo 0,2,4
         continue  # preskače ako peta vrednost nije 0
 
     if isinstance(i["opcije"], list):
