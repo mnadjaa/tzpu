@@ -29,6 +29,7 @@ import sys
 from datetime import datetime
 #import threading
 import os
+import time
 
 SEED = 422
 ui = False  #ovde dal hoces UI tj. da se prikazuju grafici
@@ -428,11 +429,11 @@ def test_option(opcije):
         main.mainloop()
 
 
-def start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number,user_count):
+def start_proc(opcije,ready_count,max_available_resources,critical_utilisation_percent,resource_add_number,user_count, current_seed):
     #time.sleep(0.2)
     #-------------------python sam stavila umesto python3
     #os.system(f"python3 main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number}")
-    os.system(f"python main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number} u_c {user_count}")
+    os.system(f"python main.py e r_m {opcije[0]} a {opcije[1]} b {opcije[2]} s_r {opcije[3]} i {opcije[4]} r_c {ready_count} m_a_r {max_available_resources} c_u_p {critical_utilisation_percent} r_a_n {resource_add_number} u_c {user_count} seed {current_seed}")
 
 if _single_run == False:
     # Učitaj sve redove iz CSV-a
@@ -478,12 +479,14 @@ if _single_run == False:
             ready_count = int(row["READY_COUNT"])
             resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
 
+            current_seed = random.randint(1, 100000000)
+
             print(f"\n{'=' * 60}")
             print(f"Pokretanje simulacije {idx + 1}/{total_simulations}")
             print(f"{'=' * 60}")
 
             start_proc(opcije, ready_count, max_available_resources,
-                       critical_utilisation_percent, resource_add_number, user_count)
+                       critical_utilisation_percent, resource_add_number, user_count, current_seed)
 
             completed.append(idx)
 
@@ -540,13 +543,13 @@ if _single_run == False:
                             critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
                             ready_count = int(row["READY_COUNT"])
                             resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
-
+                            current_seed = random.randint(1, 100000000)
                             print(f"\n{'=' * 60}")
                             print(f"Ponovno pokretanje simulacije {sim_num}")
                             print(f"{'=' * 60}")
 
                             start_proc(opcije, ready_count, max_available_resources,
-                                       critical_utilisation_percent, resource_add_number, user_count)
+                                       critical_utilisation_percent, resource_add_number, user_count, current_seed)
 
                             print(f"\nSimulacija {sim_num} ponovo izvršena!")
                         else:
@@ -615,13 +618,13 @@ if _single_run == False:
                     critical_utilisation_percent = float(row["CRITICAL_UTILISATION"])
                     ready_count = int(row["READY_COUNT"])
                     resource_add_number = int(row["RESOURCE_ADD_NUMBER"])
-
+                    current_seed = random.randint(1, 100000000)
                     print(f"\n{'=' * 60}")
                     print(f"Ponovno pokretanje simulacije {sim_num}")
                     print(f"{'=' * 60}")
 
                     start_proc(opcije, ready_count, max_available_resources,
-                               critical_utilisation_percent, resource_add_number, user_count)
+                               critical_utilisation_percent, resource_add_number, user_count, current_seed)
 
                     print(f"\nSimulacija {sim_num} ponovo izvršena!\n")
 

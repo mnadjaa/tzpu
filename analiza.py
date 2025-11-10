@@ -20,10 +20,10 @@ print(len(svi))
 
 for i in svi:
     ####ZA BROKER
-    #if(i["BROKER_TYPE"] != 3): continue#preskace sve koji nemaju tu vrednost za broker
+    if(i["BROKER_TYPE"] != 1): continue#preskace sve koji nemaju tu vrednost za broker
     ###############
     #####ZA SET RASPOREDA:
-
+    """
     if "opcije" not in i:#or not isinstance(i["opcije"], (list, tuple)) or len(i["opcije"]) <= 4
         continue  # preskače ako opcije ne postoje
 
@@ -35,7 +35,7 @@ for i in svi:
 
     if isinstance(i["opcije"], list):
         i["opcije"] = json.dumps(i["opcije"])
-
+    """
     ############################################################
 
     opcije_key = tuple(i["opcije"]) if isinstance(i["opcije"], list) else i["opcije"]

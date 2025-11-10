@@ -1,0 +1,135 @@
+
+@@@@@@@@@@@@@@
+RC: 30 , max: 30 , crit: 0.5 , add: 5
+	id:30-30-0.5-5
+	score1:	  5.05
+	score2:	  -21.95
+	scoreG:	  0.51
+
+	avg_util:	  50.50 %   	max: 50.50 %	min: 50.50 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 40 , max: 30 , crit: 0.5 , add: 5
+	id:40-30-0.5-5
+	score1:	  3.79
+	score2:	  -23.21
+	scoreG:	  0.38
+
+	avg_util:	  37.90 %   	max: 37.90 %	min: 37.90 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 30 , crit: 0.5 , add: 5
+	id:20-30-0.5-5
+	score1:	  -49.12
+	score2:	  -76.12
+	scoreG:	  -20.91
+
+	avg_util:	  64.80 %   	max: 64.80 %	min: 64.80 %
+	avg_wait:	  13.90 min   	max: 13.90 min	min: 13.90 min
+
+	SLA 0.1:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 0.5:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.0:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.5:	  16.00       	max: 16.00    	min: 16.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 40 , crit: 0.5 , add: 5
+	id:20-40-0.5-5
+	score1:	  -49.12
+	score2:	  -85.12
+	scoreG:	  -20.91
+
+	avg_util:	  64.80 %   	max: 64.80 %	min: 64.80 %
+	avg_wait:	  13.90 min   	max: 13.90 min	min: 13.90 min
+
+	SLA 0.1:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 0.5:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.0:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.5:	  16.00       	max: 16.00    	min: 16.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.5 , add: 5
+	id:20-50-0.5-5
+	score1:	  -49.12
+	score2:	  -94.12
+	scoreG:	  -20.91
+
+	avg_util:	  64.80 %   	max: 64.80 %	min: 64.80 %
+	avg_wait:	  13.90 min   	max: 13.90 min	min: 13.90 min
+
+	SLA 0.1:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 0.5:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.0:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.5:	  16.00       	max: 16.00    	min: 16.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 10 , crit: 0.5 , add: 5
+	id:20-10-0.5-5
+	score1:	  -49.12
+	score2:	  -58.12
+	scoreG:	  -20.91
+
+	avg_util:	  64.80 %   	max: 64.80 %	min: 64.80 %
+	avg_wait:	  13.90 min   	max: 13.90 min	min: 13.90 min
+
+	SLA 0.1:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 0.5:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.0:	  16.00       	max: 16.00    	min: 16.00    
+	SLA 1.5:	  16.00       	max: 16.00    	min: 16.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 20 , crit: 0.5 , add: 5
+	id:20-20-0.5-5
+	score1:	  -47.91
+	score2:	  -65.91
+	scoreG:	  -21.79
+
+	avg_util:	  64.90 %   	max: 64.90 %	min: 64.90 %
+	avg_wait:	  13.60 min   	max: 13.60 min	min: 13.60 min
+
+	SLA 0.1:	  17.00       	max: 17.00    	min: 17.00    
+	SLA 0.5:	  17.00       	max: 17.00    	min: 17.00    
+	SLA 1.0:	  17.00       	max: 17.00    	min: 17.00    
+	SLA 1.5:	  17.00       	max: 17.00    	min: 17.00    
+
+@@@@@@@@@@@@@@
+RC: 10 , max: 30 , crit: 0.5 , add: 5
+	id:10-30-0.5-5
+	score1:	  -204.72
+	score2:	  -231.72
+	scoreG:	  -51.47
+
+	avg_util:	  84.80 %   	max: 84.80 %	min: 84.80 %
+	avg_wait:	  53.30 min   	max: 53.30 min	min: 53.30 min
+
+	SLA 0.1:	  31.00       	max: 31.00    	min: 31.00    
+	SLA 0.5:	  31.00       	max: 31.00    	min: 31.00    
+	SLA 1.0:	  31.00       	max: 31.00    	min: 31.00    
+	SLA 1.5:	  31.00       	max: 31.00    	min: 31.00    
+
+@@@@@@@@@@@@@@
+RC: 5 , max: 30 , crit: 0.5 , add: 5
+	id:5-30-0.5-5
+	score1:	  -479.97
+	score2:	  -506.97
+	scoreG:	  -72.00
+
+	avg_util:	  92.30 %   	max: 92.30 %	min: 92.30 %
+	avg_wait:	  122.30 min   	max: 122.30 min	min: 122.30 min
+
+	SLA 0.1:	  24.00       	max: 24.00    	min: 24.00    
+	SLA 0.5:	  24.00       	max: 24.00    	min: 24.00    
+	SLA 1.0:	  24.00       	max: 24.00    	min: 24.00    
+	SLA 1.5:	  24.00       	max: 24.00    	min: 24.00    

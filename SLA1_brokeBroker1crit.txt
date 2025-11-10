@@ -1,0 +1,180 @@
+
+@@@@@@@@@@@@@@
+RC: 40 , max: 30 , crit: 0.8 , add: 1
+	id:40-30-0.8-1
+	score1:	  3.79
+	score2:	  -23.21
+	scoreG:	  0.38
+
+	avg_util:	  37.90 %   	max: 37.90 %	min: 37.90 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 40 , max: 30 , crit: 0.1 , add: 1
+	id:40-30-0.1-1
+	score1:	  3.79
+	score2:	  -23.21
+	scoreG:	  0.38
+
+	avg_util:	  37.90 %   	max: 37.90 %	min: 37.90 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 40 , max: 30 , crit: 0.4 , add: 1
+	id:40-30-0.4-1
+	score1:	  3.79
+	score2:	  -23.21
+	scoreG:	  0.38
+
+	avg_util:	  37.90 %   	max: 37.90 %	min: 37.90 %
+	avg_wait:	  0.00 min   	max: 0.00 min	min: 0.00 min
+
+	SLA 0.1:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 0.5:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.0:	  0.00       	max: 0.00    	min: 0.00    
+	SLA 1.5:	  0.00       	max: 0.00    	min: 0.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 40 , crit: 0.8 , add: 1
+	id:20-40-0.8-1
+	score1:	  -24.50
+	score2:	  -60.50
+	scoreG:	  -15.45
+
+	avg_util:	  55.00 %   	max: 55.00 %	min: 55.00 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 40 , crit: 0.1 , add: 1
+	id:20-40-0.1-1
+	score1:	  -24.50
+	score2:	  -60.50
+	scoreG:	  -15.45
+
+	avg_util:	  55.00 %   	max: 55.00 %	min: 55.00 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 40 , crit: 0.4 , add: 1
+	id:20-40-0.4-1
+	score1:	  -24.50
+	score2:	  -60.50
+	scoreG:	  -15.45
+
+	avg_util:	  55.00 %   	max: 55.00 %	min: 55.00 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.8 , add: 1
+	id:20-50-0.8-1
+	score1:	  -24.79
+	score2:	  -69.79
+	scoreG:	  -15.48
+
+	avg_util:	  52.10 %   	max: 52.10 %	min: 52.10 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.1 , add: 1
+	id:20-50-0.1-1
+	score1:	  -24.79
+	score2:	  -69.79
+	scoreG:	  -15.48
+
+	avg_util:	  52.10 %   	max: 52.10 %	min: 52.10 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 20 , max: 50 , crit: 0.4 , add: 1
+	id:20-50-0.4-1
+	score1:	  -24.79
+	score2:	  -69.79
+	scoreG:	  -15.48
+
+	avg_util:	  52.10 %   	max: 52.10 %	min: 52.10 %
+	avg_wait:	  7.50 min   	max: 7.50 min	min: 7.50 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 5 , max: 30 , crit: 0.8 , add: 1
+	id:5-30-0.8-1
+	score1:	  -27.65
+	score2:	  -54.65
+	scoreG:	  -15.77
+
+	avg_util:	  59.50 %   	max: 59.50 %	min: 59.50 %
+	avg_wait:	  8.40 min   	max: 8.40 min	min: 8.40 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 5 , max: 30 , crit: 0.1 , add: 1
+	id:5-30-0.1-1
+	score1:	  -27.65
+	score2:	  -54.65
+	scoreG:	  -15.77
+
+	avg_util:	  59.50 %   	max: 59.50 %	min: 59.50 %
+	avg_wait:	  8.40 min   	max: 8.40 min	min: 8.40 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
+
+@@@@@@@@@@@@@@
+RC: 5 , max: 30 , crit: 0.4 , add: 1
+	id:5-30-0.4-1
+	score1:	  -27.65
+	score2:	  -54.65
+	scoreG:	  -15.77
+
+	avg_util:	  59.50 %   	max: 59.50 %	min: 59.50 %
+	avg_wait:	  8.40 min   	max: 8.40 min	min: 8.40 min
+
+	SLA 0.1:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 0.5:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.0:	  13.00       	max: 13.00    	min: 13.00    
+	SLA 1.5:	  13.00       	max: 13.00    	min: 13.00    
