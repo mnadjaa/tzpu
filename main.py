@@ -452,7 +452,7 @@ if _single_run == False:
     print(f"Ukupno simulacija za izvršavanje: {total_simulations}")
 
     while remaining:
-        # Pokreni sledeću grupu simulacija
+        # Pokreni sledecu grupu simulacija
         batch_size = min(Properties.PAUSE_INTERVAL, len(remaining))
         current_batch = remaining[:batch_size]
 
@@ -490,10 +490,10 @@ if _single_run == False:
 
             completed.append(idx)
 
-        # Ukloni završene iz preostalih
+        # Ukloni zavrsene iz preostalih
         remaining = remaining[batch_size:]
 
-        # Ako ima još simulacija, pitaj korisnika
+        # Ako ima jos simulacija
         if remaining:
             print(f"\n{'=' * 70}")
             print(f"Završeno {len(completed)}/{total_simulations} simulacija")
